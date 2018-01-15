@@ -1,16 +1,11 @@
 package kroa100;
 
 import java.awt.Point;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
@@ -23,28 +18,22 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		//File coordonates_file = new File("kroA100.txt");
-
-		//HashMap<String,Point> coordonates = lireCoordonnees(coordonates_file));
+		File coordonates_file = new File("kroA100.txt");
+		HashSet<City> cities = fileToCities(coordonates_file);
 		
-		//DistanceMatrix matrix = new DistanceMatrix(NBVILLES);
-		//matrix.generateDistance(coordonates);
+		Matrix matrix = new Matrix(NBVILLES);
+		matrix.generateDistance(cities);
 		
-		String[] test = new String[10];
-		test[0] = "aaa";
-		test[1] = "bbb";
-		test[2] = "ccc";
-		test[3] = "ddd";
-		int tmp =1;
-		test[tmp] = test[--tmp];
-		System.out.println(test[0] + " " + test[1]);
+		changeSystemOutToFile("chemins.txt");
+		City[] path = matrix.bestPathUsingNNHeurisitic();
+		changeSystemOutToConsole();
 		
 		//NNHeuristic(matrice);
 	}
 
 	
 	
-	public static HashMap<String,Point> lireCoordonnees(File file) {
+	public static HashSet<City> fileToCities(File file) {
 		Scanner sc = null;
 		try {
 			sc = new Scanner(file);
@@ -54,7 +43,7 @@ public class Main {
 		}
 		
 		String line;
-		HashMap<String,Point> coordonates = new HashMap<String,Point>();
+		HashSet<City> coordonates = new HashSet<City>();
 		
 		NBVILLES = 0;
 		while( sc.hasNextLine() ) {
@@ -62,10 +51,10 @@ public class Main {
 			if( line.compareTo("EOF") == 0 )
 				break;
 			NBVILLES++;
-			String cityNb = line.split(" ")[0];
+			String cityName = line.split(" ")[0];
 			int cityX = Integer.parseInt( line.split(" ")[1] );
 			int cityY = Integer.parseInt( line.split(" ")[2] );
-			coordonates.put( cityNb , new Point(cityX, cityY) );
+			coordonates.add( new City(cityName, new Point(cityX, cityY)) );
 		}
 		return coordonates;
 	}
@@ -126,7 +115,7 @@ public class Main {
 	 * Le parcours le moins coûteux est indiqué
 	 * 
 	 * return le parcours le moins coûteux
-	 */
+	 *//*
 	public static int[] NNHeuristic(int[][] matrice) {
 		
 		//on garde en mémoire une liste avec tous les numéros des villes
@@ -167,7 +156,8 @@ public class Main {
 		System.out.println("BEST PATH : " + pathToString(bestPathArray));						//on écrit en fichier le meilleur parcours
 		System.out.println("COST : " + costOfBestPath);							//on écrit en fichier son coût
 		return bestPathArray;													//on retourne le meilleur parcours trouvé
-	}
+	}*/
+	
 	
 	public static void changeSystemOutToFile(String file) {
 		try {
@@ -182,7 +172,7 @@ public class Main {
 		System.setOut(SYSTEMOUT);
 	}
 		
-	public static String pathToString(int[] path) {
+	public static String pathToString(City[] path) {
 		String p = path[0] + "";
 		for(int i=1; i<path.length; i++)
 			p += "-" + path[i];
@@ -195,7 +185,7 @@ public class Main {
 	 * @param departureCity  La ville à laquelle nous sommes arrivés
 	 * @param remainingCities  Liste indiquant les villes qui sont encore non parcourues
 	 * @return Une pile représentant le parcours optimale à suivre, avec au sommet la ville de départ
-	 */
+	 */ /*
 	public static LinkedList<Integer> NNHeuristicREC(int[][] matrice, int departureCity, List<Integer> remainingCities) {
 		
 		if( remainingCities.isEmpty() )						//si on est à la dernière ville
@@ -222,8 +212,8 @@ public class Main {
 		list.push(closestCity);
 		return list;
 	}
-	
-	
+	*/
+	/*
 	public static void printMatrice(int[][] matrice) {
 		//PRINT MATRICE
 		for(int a=0; a<=NBVILLES; a++) {
@@ -241,13 +231,13 @@ public class Main {
 			System.out.println();
 		}
 	}
-	
-	
+	*/
+	/*
 	public static void printDistances(int[][] matrice) {
 		//PRINT DISTANCES
 		for(int a=1; a<=NBVILLES; a++)
 			for(int b=1; b<=NBVILLES; b++)
 				System.out.println("Distance ville " + a + " -- " + b + " : " + matrice[a][b]);
 	}
-	
+	*/
 }

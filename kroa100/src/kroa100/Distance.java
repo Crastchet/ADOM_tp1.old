@@ -2,10 +2,10 @@ package kroa100;
 
 public class Distance {
 
-	private String a,b;
+	private City a,b;
 	private double distance;
 	
-	public Distance(String a, String b) {
+	public Distance(City a, City b) {
 		this.a = a;
 		this.b = b;
 	}
@@ -17,6 +17,14 @@ public class Distance {
 	
 	public void setValue(double dist) {
 		this.distance = Math.round(dist);
+	}
+	
+	public City getCityA() {
+		return this.a;
+	}
+	
+	public City getCityB() {
+		return this.b;
 	}
 	
 	/*public double update() {
